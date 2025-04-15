@@ -11,7 +11,9 @@ describe('Sign In page', () => {
     cy.get('button[type="submit"]').click();
 
     // Assert successful login
-    cy.get('a[href="/logout"]').should('be.visible');
+    cy.get('#flash')
+      .should('have.class', 'success')
+      .and('contain', 'You logged into a secure area!');
   });
 
   it('should fail to log in with incorrect credentials', () => {
@@ -20,7 +22,9 @@ describe('Sign In page', () => {
     cy.get('button[type="submit"]').click();
 
     // Assert login failure
-    cy.get('.error').should('contain', 'Your username is invalid!');
+    cy.get('#flash')
+      .should('have.class', 'error')
+      .and('contain', 'Your username is invalid!');
   });
 
   it('should log out successfully', () => {
@@ -33,6 +37,8 @@ describe('Sign In page', () => {
     cy.get('a[href="/logout"]').click();
 
     // Assert successful logout
-    cy.get('button[type="submit"]').should('be.visible');
+    cy.get('#flash')
+      .should('have.class', 'success')
+      .and('contain', 'You logged out of the secure area!');
   });
 });
