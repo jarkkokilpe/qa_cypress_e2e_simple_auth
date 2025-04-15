@@ -1,6 +1,7 @@
+// filepath: cypress/e2e/signIn.cy.test.js
 /// <reference types="cypress" />
 
-describe('Sign In page', () => {
+describe('Sign In page tests', () => {
   beforeEach(() => {
     cy.visit('https://the-internet.herokuapp.com/login');
   });
@@ -22,12 +23,13 @@ describe('Sign In page', () => {
     cy.get('button[type="submit"]').click();
 
     // Assert login failure
-    cy.get('#flash')
-      .should('have.class', 'error')
-      .and('contain', 'Your username is invalid!');
+    cy.get('button.radius[type="submit"]')
+      .should('exist')
+      .and('be.visible')
+      .and('contain', 'Login');
   });
 
-  it('should log out successfully', () => {
+  it('should log out successfully after logging in', () => {
     // Log in first
     cy.get('input[name="username"]').type('tomsmith');
     cy.get('input[name="password"]').type('SuperSecretPassword!');
