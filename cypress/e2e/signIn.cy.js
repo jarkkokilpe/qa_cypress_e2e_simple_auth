@@ -23,10 +23,14 @@ describe('Sign In page tests', () => {
     cy.get('button[type="submit"]').click();
 
     // Assert login failure
-    cy.get('button.radius[type="submit"]')
-      .should('exist')
-      .and('be.visible')
-      .and('contain', 'Login');
+    cy.get('#flash')
+      .should('be.visible')
+      .and('have.class', 'error')
+      .invoke('text') // Get the text content of the element
+      .then((text) => {
+        const normalizedText = text.replace(/\s+/g, ' ').trim(); // Normalize whitespace
+        expect(normalizedText).to.include('Your password is invalid!');
+      });
   });
 
   it('should log out successfully after logging in', () => {
